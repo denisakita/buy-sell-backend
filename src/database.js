@@ -1,7 +1,10 @@
-const {Client} = require('pg');
-require('dotenv').config();
+import { Pool } from 'pg';
+import dotenv from 'dotenv';
 
-const client = new Client({
+// Load environment variables from .env file
+dotenv.config();
+
+const pool = new Pool({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     database: process.env.DB_NAME,
@@ -9,44 +12,22 @@ const client = new Client({
     password: 'amf',
 });
 
-async function connectToDatabase() {
+export const connectToDatabase = async () => {
     try {
-        await client.connect();
-        console.log('Connected to PostgreSQL database');
+        await pool.connect();
+        console.log('Connected to the database');
     } catch (error) {
-        console.error('Connection error', error);
-    }
-}
-
-async function query(queryString, escapedValues) {
-    try {
-        const result = await client.query(queryString, escapedValues);
-        return result.rows;
-    } catch (error) {
-        console.error('Query error', error);
+        console.error('Unable to connect to the database:', error.message);
         throw error;
     }
-}
-
-module.exports = {
-    connectToDatabase,
-    query,
 };
-// Connection with MySQL
-// const connection = msql.createConnection({
-//   host:'localhost',
-//   user:'amf',
-//   password:'amf',
-//   database:'buy-sell-db'
-// });
-// export const db ={
-//   connect:()=> connection.conect(),
-//   query:(queryString, escapedValue)=>
-//       new Promise((resolve,reject)=>{
-//         connection.query(queryString,escapedValue,(error,results,fields)=>{
-//           if (error) reject
-//           resolve({results,fields});
-//         })
-//       }),
-//   end: () => connection.end(),
-// }
+
+export const query = async (text, params) => {
+    try {
+        const result = await pool.query(text, params);
+        return result.rows;
+    } catch (error) {
+        console.error('Error executing query:', error.message);
+        throw error;
+    }
+};
