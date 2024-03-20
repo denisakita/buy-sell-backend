@@ -11,6 +11,7 @@ const start = async () => {
     });
 
     routes.forEach(route => server.route(route));
+    console.log(routes)
 
     await connectToDatabase(); // Connect to the database
 
