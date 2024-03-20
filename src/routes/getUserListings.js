@@ -1,9 +1,9 @@
 import {query} from "../database";
 
-export const getUserListings = {
+export const getUserListingsRoute = {
     method: 'GET',
     path: '/api/users/{userId}/listings',
-    handler:async (req,h)=>{
+    handler: async (req, h) => {
         const userId = req.params.userId;
 
         const results = await query(

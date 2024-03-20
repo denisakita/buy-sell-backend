@@ -1,7 +1,7 @@
 import {query} from "../database";
 import Boom from '@hapi/boom';
 
-export const addViewToListing = {
+export const addViewToListingRoute = {
     method: 'POST',
     path: '/api/listings/{id}/add-view',
     handler: async (req, h) => {
