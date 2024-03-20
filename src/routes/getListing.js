@@ -1,15 +1,27 @@
-import { fakeListing } from "./fake-data";
-import Boom from "@hapi/boom";
+import Boom from '@hapi/boom';
+import {query} from "../database";
 
 export const getListingRoute = {
     method: 'GET',
-    path: '/api/listing/{id}',
-    handler: (req, h) => {
-        const id = req.params.id;
-        const listing = fakeListing.find(listing => listing.id === id);
-        if (!listing) {
-            throw Boom.notFound(`Listing does not exist with id ${id}`);
+    path: '/api/listings/{id}',
+    handler: async (req, h) => {
+        try {
+            const id = req.params.id;
+            const result = await query(
+                'SELECT * FROM listings WHERE id = $1',
+                [id],
+            );
+
+            const listing = result[0];
+
+            if (!listing) {
+                throw Boom.notFound(`Listing does not exist with id ${id}`);
+            }
+
+            return listing;
+        } catch (error) {
+            console.error('Error retrieving listing by ID:', error.message);
+            throw Boom.badImplementation('An error occurred while retrieving the listing.');
         }
-        return listing;
     }
 }
