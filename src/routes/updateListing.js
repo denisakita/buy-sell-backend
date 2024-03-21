@@ -1,7 +1,7 @@
 import {query} from "../database";
 
 export const updateListingRoute = {
-    method: 'POST',
+    method: 'PUT',
     path: '/api/listings/{id}',
     handler: async (req, h) => {
 
@@ -11,16 +11,15 @@ export const updateListingRoute = {
 
         await query(
             `UPDATE listings
-             SET name=?,
-                 description=?,
-                 price=?
-             WHERE id = ?
-               AND user_id = ?`,
-            [name, description, price, id, userId]
+             SET name=$1,
+                 description=$2,
+                 price=$3
+             WHERE id = $4 AND user_id = $5`,
+            [name, description, price, id, userId],
         );
 
         const results = await query(
-            'SELECT * FROM listings WHERE id=? AND user_id=?',
+            'SELECT * FROM listings WHERE id=$1 AND user_id=$2',
             [id, userId]
         );
 
