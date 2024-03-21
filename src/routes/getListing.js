@@ -13,7 +13,6 @@ export const getListingRoute = {
             );
 
             const listing = result[0];
-            console.log(listing);
 
             if (!listing) {
                 throw Boom.notFound(`Listing does not exist with id ${id}`);
