@@ -5,9 +5,12 @@ import {connectToDatabase} from './database'; // Import the connectToDatabase fu
 
 let server;
 const start = async () => {
-    server = Hapi.server({
+   server = Hapi.server({
         port: 8000,
         host: 'localhost',
+        routes: {
+            cors: true // Enable CORS for all routes on this server
+        }
     });
 
     routes.forEach(route => server.route(route));

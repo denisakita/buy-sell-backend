@@ -1,5 +1,5 @@
 import Boom from '@hapi/boom';
-import {query} from "../database";
+import { query } from "../database";
 
 export const getListingRoute = {
     method: 'GET',
@@ -13,15 +13,17 @@ export const getListingRoute = {
             );
 
             const listing = result[0];
+            console.log(listing);
 
             if (!listing) {
                 throw Boom.notFound(`Listing does not exist with id ${id}`);
             }
 
-            return listing;
+            // Set response content type to JSON
+            return h.response(listing).type('application/json');
         } catch (error) {
             console.error('Error retrieving listing by ID:', error.message);
             throw Boom.badImplementation('An error occurred while retrieving the listing.');
         }
     }
-}
+};
