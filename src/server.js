@@ -1,7 +1,7 @@
 import Hapi from '@hapi/hapi';
 // import * as admin from 'firebase-admin';
 import routes from './routes';
-import { connectToDatabase } from './database'; // Import the connectToDatabase function
+import {connectToDatabase} from './database'; // Import the connectToDatabase function
 
 // import credentials from '../credentials.json';
 //
@@ -20,6 +20,9 @@ const start = async () => {
             cors: true // Enable CORS for all routes on this server
         }
     });
+
+    // await server.register(inert);
+
 
     routes.forEach(route => server.route(route));
 
@@ -41,7 +44,7 @@ process.on('unhandledRejection', err => {
 process.on('SIGINT', async () => {
     console.log('Stopping server...');
     try {
-        await server.stop({ timeout: 10000 });
+        await server.stop({timeout: 10000});
         console.log('Server stopped');
     } catch (error) {
         console.error('Error stopping server:', error);

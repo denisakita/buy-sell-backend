@@ -13,5 +13,7 @@ export default [
     getUserListingsRoute,
     createNewListingRoute,
     updateListingRoute,
-    deleteListingRoute
+    deleteListingRoute,
+    // staticFilesRoute,
+    // ...filesRoutes,
 ]
