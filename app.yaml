@@ -1,0 +1,10 @@
+runtime: nodejs
+env: flex
+beta_settings:
+  cloud_sql_instances: sql_instance_test
+  env_variables:
+    DB_USER: user_test
+    DB_PASS: pass_test
+    DB_NAME: db_test
+    DB_SOCKET: /cloudsql/sql_instance_test
+
